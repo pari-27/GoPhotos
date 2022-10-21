@@ -1,15 +1,10 @@
 FROM golang:1.13-alpine AS build
 
-ENV GO111MODULE=on
-ENV GOSUMDB=off
-ENV GOPROXY=direct
-RUN apk add --no-cache git
-WORKDIR go/src/goPhotos
-ADD /* ./
-RUN go mod download
-RUN go build -o cmd
-RUN ls -ltr
+WORKDIR /src/
+COPY . /src/
+
+RUN CGO_ENABLED=0 go build -o /bin/cmd
 
 FROM scratch
-COPY --from=build go/src/goPhotos/cmd /opt
-ENTRYPOINT /opt/cmd
+COPY --from=build /bin/cmd /bin/cmd
+ENTRYPOINT ["/bin/cmd"]
