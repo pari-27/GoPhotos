@@ -1,0 +1,31 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <link rel="stylesheet" href="./gallery.css"></link>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css">
+    <!--    <script src="http://ajax.googleapis.com/ajax/libs/jquery/1.9.1/jquery.min.js"></script>-->
+    <script src="./gallery.js"></script>
+</head>
+<body onload="viewAllAlbums()">
+<ul>
+    <li><a class="active" href="#home">Home</a></li>
+    <button class="open-button" onclick="openForm()">Create Album</button>
+
+    </li>
+</ul>
+<div class="form-popup" id="myForm">
+    <form action="" class="form-container">
+        <label><b>Album Name</b></label>
+        <input type="text" placeholder="Enter Album Name" id="album_name" name="album_name" required>
+
+        <button type="submit" class="btn" onclick="addAlbum()">Create</button>
+        <button type="button" class="btn cancel" onclick="closeForm()">Close</button>
+    </form>
+</div>
+<div class="grid-container grid-container-parent" id="album_space">
+</div>
+<div class="gallery"></div>
+</body>
+</html>
+
+
