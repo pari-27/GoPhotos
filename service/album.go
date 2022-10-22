@@ -49,7 +49,7 @@ func (a *App) createAlbum(w http.ResponseWriter, r *http.Request) {
 		http.Error(w, err.Error(), http.StatusBadRequest)
 		return
 	}
-	albumName := fmt.Sprintf("./static/albums/%s", jsonInput["name"])
+	albumName := fmt.Sprintf("%s/%s", utils.StaticRootPath, jsonInput["name"])
 	if _, err := os.Stat(albumName); os.IsNotExist(err) {
 
 		if err := os.MkdirAll(albumName, os.ModePerm); err != nil {
@@ -72,7 +72,7 @@ func (a *App) deleteAlbum(w http.ResponseWriter, r *http.Request) {
 	vars := mux.Vars(r)
 	albumName := vars["name"]
 	fmt.Println("name -> ", albumName)
-	err := os.RemoveAll(fmt.Sprintf("./static/albums/%s", albumName))
+	err := os.RemoveAll(fmt.Sprintf("%s/%s", utils.StaticRootPath, albumName))
 	if err != nil {
 		fmt.Println()
 		log.Fatal(err)

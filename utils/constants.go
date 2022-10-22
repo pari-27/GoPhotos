@@ -1,3 +1,3 @@
 package utils
 
-const StaticRootPath = "./static/albums"
+var StaticRootPath = "./static/albums"
