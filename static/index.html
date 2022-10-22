@@ -9,16 +9,27 @@
 <body onload="viewAllAlbums()">
 <ul>
     <li><a class="active" href="#home">Home</a></li>
-    <button class="open-button" onclick="openForm()">Create Album</button>
+    <button class="open-button1" onclick="openForm1()">Upload Image</button>
+    <button class="open-button" onclick="openForm()">Create/Delete Album</button>
 
     </li>
 </ul>
+<div class="form-popup2" id="myForm1">
+    <form action="" class="form-container">
+        <label for='files'>Select multiple files: </label>
+        <input id='files' type='file' multiple/>
+        <select id="batchSelect">Select album</select>
+        <button type="submit" class="btn" onclick="addImage()">Create</button>
+        <button type="button" class="btn cancel" onclick="closeForm1()">Close</button>
+    </form>
+</div>
 <div class="form-popup" id="myForm">
     <form action="" class="form-container">
         <label><b>Album Name</b></label>
         <input type="text" placeholder="Enter Album Name" id="album_name" name="album_name" required>
 
         <button type="submit" class="btn" onclick="addAlbum()">Create</button>
+        <button type="button" class="btn deletebtn" onclick="deleteAlbum()">Delete</button>
         <button type="button" class="btn cancel" onclick="closeForm()">Close</button>
     </form>
 </div>
