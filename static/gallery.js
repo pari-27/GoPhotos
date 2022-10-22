@@ -27,14 +27,26 @@ async function viewAllAlbums() {
             'Content-Type': 'application/json'
         },
     });
-    const albumSpace = document.getElementById("album_space")
-    var parentDIV = document.getElementsByClassName("grid-container-parent")[0];
+
+
+    const parentDIV = document.getElementById("gallery_space");
+    const albumSpace = document.createElement("div")
+
+    albumSpace.className = "grid-container grid-container-parent"
+
+    parentDIV.appendChild(albumSpace)
+
 
     response.json().then(data => {
         console.log(data);
         data["albums"].forEach(item => {
             const albumName = item.split("/")[2]
-
+            const imageSpace = document.createElement("div")
+            albumSpace.id = "album_space"
+            imageSpace.className = "image_space"
+            imageSpace.style.display = "none"
+            imageSpace.id = albumName
+            parentDIV.appendChild(imageSpace)
             const folderButton = document.createElement('button')
             const label = document.createElement('label')
             const br = document.createElement('br')
@@ -43,10 +55,12 @@ async function viewAllAlbums() {
             label.style.right = "40%"
             folderButton.className = "fa fa-folder"
             folderButton.style.fontSize = "60px"
-            folderButton.onclick = getAllImages(albumName)
-            parentDIV.appendChild(folderButton)
-            parentDIV.appendChild(br)
-            parentDIV.appendChild(label)
+            folderButton.onclick = function () {
+                getAllImages(albumName)
+            };
+            albumSpace.appendChild(folderButton)
+            albumSpace.appendChild(br)
+            albumSpace.appendChild(label)
 
 
         });
@@ -63,18 +77,25 @@ async function getAllImages(name) {
             'Content-Type': 'application/json'
         }
     });
+
+    const parentDIV = document.getElementById(name);
+    parentDIV.style.display = "block"
     const row = document.createElement("row")
     row.className = "row"
     const column = document.createElement("column")
     column.className = "column"
+    parentDIV.appendChild(row)
     row.appendChild(column)
     response.json().then(data => {
-        console.log(data);
-        if (data["images"]) {
 
+        if (data["images"]) {
             data["images"].forEach(item => {
+                item = item.replace("static/", "")
+                console.log("hellooo" + item);
                 const img = document.createElement('img')
                 img.src = item
+                img.style.width = "20%"
+                img.style.padding = "1%"
                 column.appendChild(img)
             });
         }

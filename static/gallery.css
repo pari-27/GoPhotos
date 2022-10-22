@@ -103,8 +103,9 @@ li a:hover {
 .grid-container {
     display: grid;
     grid-template-columns: repeat(32, 1fr);
-    grid-template-rows: repeat(32, 1fr);
     gap: 0px 0px;
+    height: auto;
+
 
 }
 
@@ -113,6 +114,7 @@ li a:hover {
 
 .grid-container * {
     position: relative;
+
 }
 
 .grid-container *:after {
@@ -139,4 +141,9 @@ li a:hover {
 .column img {
     margin-top: 8px;
     vertical-align: middle;
+}
+
+.gallery_space {
+    border-bottom: #111111;
+    border-bottom-width: 1px;
 }
