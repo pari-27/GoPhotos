@@ -17,22 +17,26 @@ func (a *App) getAlbumImages(w http.ResponseWriter, r *http.Request) {
 	albumName := vars["name"]
 	var output []string
 	pathToAlbum := fmt.Sprintf("%s/%s", utils.StaticRootPath, albumName)
-	if _, err := os.Stat(pathToAlbum); !os.IsNotExist(err) {
-		err := filepath.Walk(pathToAlbum, func(path string, info os.FileInfo, err error) error {
-			if err != nil {
-				fmt.Println(err)
-				return err
-			}
-			fmt.Printf("dir: %v: name: %s\n", info.IsDir(), path)
-			if !info.IsDir() {
-				output = append(output, path)
-			}
-			return nil
-		})
+	if _, err := os.Stat(pathToAlbum); os.IsNotExist(err) {
+		utils.SendError(w, "failed to fetch image from path", 400)
+	}
+	err := filepath.Walk(pathToAlbum, func(path string, info os.FileInfo, err error) error {
 		if err != nil {
 			fmt.Println(err)
+			return err
 		}
+		fmt.Printf("dir: %v: name: %s\n", info.IsDir(), path)
+		if !info.IsDir() {
+			output = append(output, path)
+		}
+		return nil
+	})
+	if err != nil {
+		fmt.Println(err)
+		utils.SendError(w, "failed to fetch images", 400)
+		return
 	}
+
 	utils.SendAsJson(w, map[string]interface{}{"album": albumName, "images": output}, http.StatusOK)
 
 }
